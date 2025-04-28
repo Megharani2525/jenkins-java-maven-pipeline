@@ -2,15 +2,18 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.8.6' // Ensure this version is configured in Jenkins
-        jdk 'JDK 17'      // Ensure this JDK version is configured in Jenkins
+        maven 'Maven' // Ensure this version is configured in Jenkins
+        jdk 'Java'      // Ensure this JDK version is configured in Jenkins
     }
     
     stages {
         stage('Checkout') {
             steps {
                 // Checkout code from SCM
-                checkout scm
+                checkout([$class: 'GitSCM',
+                        branches: [[name: 'main']],
+                        userRemoteConfigs: [[url: 'https://github.com/Megharani2525/jenkins-java-maven-pipeline.git',
+                        credentialsId: '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']]])
             }
         }
 
@@ -40,7 +43,8 @@ pipeline {
                 // Simple deployment example
                 sh 'echo "Deploying application..."'
                 // Example of copying artifacts to a deploy location
-                sh 'cp target/basic-java-app-1.0-SNAPSHOT.jar /path/to/deploy/'
+                // sh 'cp target/basic-java-app-1.0-SNAPSHOT.jar /path/to/deploy/'
+                sh 'mvn deploy'
             }
         }
     }
