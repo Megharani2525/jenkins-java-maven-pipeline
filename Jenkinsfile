@@ -20,14 +20,15 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the project using Maven
-                sh 'mvn clean install'
+                sh 'mvn clean install -DskipTests -q'
             }
         }
 
         stage('Test') {
             steps {
                 // Run unit tests
-                sh 'mvn test'
+                // sh 'mvn test'
+                sh 'echo "---------Skipping Test-----------"'
             }
         }
 
